@@ -2,7 +2,7 @@ class Player {
   constructor() {
     this.id = "p-" + Math.round(Math.random() *1000000);
     this.type = 'original';
-    this.frames = ["-6px -515px", "-6px -545px"];  // cadrele sprite-ului
+    this.frames = ["-266px -545px"];  // cadrele sprite-ului
     this.x = 0;  // random() 0.. width window
     this.y = 500;
     this.w = 40;
@@ -15,6 +15,30 @@ class Player {
                             this.render()+
                             `</div>`
     //this.live();
+
+    // facem conexiunea cu evenimentele "keydown"
+    document.body.onkeydown = this.action.bind(this);
+  }
+
+  action(){
+
+    if (event.code == "Space") {
+      this.shoot();
+    }
+    if (event.key == "ArrowRight") {
+      this.moveRight();
+    }
+    if(event.key == "ArrowLeft") {
+      this.moveLeft();
+    }
+    this.refresh();
+  }
+  shoot(){
+    let rocket = new Rocket();
+    rocket.x = this.x + this.w / 2 - rocket.w /2;
+    rocket.y = this.y - rocket.h;
+    rocket.addToMap();
+    rocket.live();
   }
 
   refresh(){

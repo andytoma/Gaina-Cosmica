@@ -1,9 +1,9 @@
 class Invader {
   constructor() {
-    this.id = "i-" + Math.round(Math.random() *1000000);
+    this.id = "i-" + random(1000000000, 2000000000);
     this.type = 'homebrew';
     this.frames = ["-6px -515px", "-6px -545px"];  // cadrele sprite-ului
-    this.x = 0;  // random() 0.. width window
+    this.x = random(0, window.innerWidth);  // random() 0.. width window
     this.y = 0;
     this.w = 40;
     this.h = 30;
@@ -23,6 +23,7 @@ class Invader {
 
   live(){
     var that = this;
+    that.timer = 
     setInterval(function(){
       that.frames.push(that.frames.shift() );
 
@@ -33,10 +34,19 @@ class Invader {
         that.moveLeft();
       }
 
-
-
       that.refresh();
     },50);
+  }
+  die(){
+    //stergem den lista globala
+    for(var index in invaders){
+      if(this.id == invaders[index].id){
+        invaders.splice(index,1); // sterge fin Array de pe index indicat
+        window[this.id].innerHTML = '';
+        clerInterval(this.timer);
+        break;
+      }
+    }
   }
 
   ///////////  movement
